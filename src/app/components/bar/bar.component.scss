@@ -1,0 +1,24 @@
+.bar {
+  background-color: #33ccff;
+  margin: 0 2px;
+  text-align: center;
+  width: 5px;
+}
+
+.bar-container {
+  align-items: flex-end;
+  display: flex;
+  height: 100%;
+}
+
+.compare {
+  background-color: #ff99cc;
+}
+
+.final {
+  background-color: #66ffcc;
+}
+
+.initial {
+  background-color: #33ccff;
+}

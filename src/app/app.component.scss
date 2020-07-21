@@ -1,22 +1,69 @@
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  max-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-grid {
+  display: grid;
+  grid-template-rows: 1fr 8fr 1fr;
+  height: 100%;
 }
 
 .footer {
-  background-color: lightgreen;
-  min-height: 10vh;
+  border-top: 1px solid #fff;
+}
+
+.footer-grid {
+  column-gap: 32px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, auto);
+  margin: 8px;
+  row-gap: 8px;
+}
+
+.portfolio-link {
+  color: deepskyblue;
+}
+
+.linked-in-logo {
+  max-width: 32px;
+}
+
+.social-link {
+  align-items: center;
+  display: flex;
+}
+
+.social-text {
+  margin-left: 5px;
 }
 
 .toolbar {
-  background-color: lightgray;
-  min-height: 10vh;
+  align-items: center;
+  border-bottom: 1px solid #fff;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+
+  * {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  mat-select {
+    padding-right: 5px;
+  }
 }
 
 .visualizer-main {
+  display: flex;
+  justify-content: center;
   margin: 5px 0;
-  min-height: 80vh;
-  max-height: 80vh;
 }

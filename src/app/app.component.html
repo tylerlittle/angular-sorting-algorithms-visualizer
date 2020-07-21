@@ -1,10 +1,95 @@
-<div class="toolbar">
-  <button type="button" class="btn btn-primary" (click)="onGenerate()">
-    Generate
-  </button>
-  <button type="button" class="btn btn-primary" (click)="onSort()">SORT</button>
+<div class="app-grid">
+  <div class="toolbar">
+    <h1>Angular Sorting Visualizer</h1>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Algorithm</mat-label>
+        <mat-select formControlName="algorithmId">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let algorithm of algorithmsDataSource" [value]="algorithm.id">
+            {{ algorithm.text }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.controls.algorithmId.hasError('required')"
+          >Please select an algorithm</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Array Type</mat-label>
+        <mat-select formControlName="arrayTypeId">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let arrayType of arrayTypeDataSource" [value]="arrayType.id">
+            {{ arrayType.text }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.controls.arrayTypeId.hasError('required')"
+          >Please select an array type</mat-error
+        >
+      </mat-form-field>
+
+      <button
+        type="button"
+        mat-stroked-button
+        color="primary"
+        (click)="onGenerate()"
+        [disabled]="form.disabled || !form.get('arrayTypeId').value"
+      >
+        GENERATE
+      </button>
+
+      <button
+        type="button"
+        mat-stroked-button
+        color="primary"
+        (click)="onSort()"
+        [disabled]="!form.valid"
+      >
+        {{ isSortBtn ? 'SORT' : 'RESET' }}
+      </button>
+    </form>
+  </div>
+  <div class="visualizer-main">
+    <app-bar *ngFor="let bar of state; index as i; trackBy: trackByFn" [bar]="bar"></app-bar>
+  </div>
+  <div class="footer">
+    <div class="footer-grid">
+      <p>
+        This sorting visualizer was built with Angular and Angular Material.
+      </p>
+      <p>*Work in progress. More algorithms & features coming soon!</p>
+      <p>
+        Developed by
+        <a
+          class="portfolio-link"
+          href="https://tylerlittle.github.io/portfolio/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Tyler Little</a
+        >.
+      </p>
+      <div>
+        <a
+          class="social-link"
+          href="https://github.com/tylerlittle"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><img src="../assets/GitHub-Mark-Light-32px.png" /><span class="social-text"
+            >View my Github Profile</span
+          ></a
+        >
+      </div>
+      <div>
+        <a
+          class="social-link"
+          href="https://www.linkedin.com/in/tyler-little/"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><img src="../assets/LI-In-Bug.png" class="linked-in-logo" /><span class="social-text"
+            >View my LinkedIn Profile</span
+          ></a
+        >
+      </div>
+    </div>
+  </div>
 </div>
-<div class="visualizer-main d-flex justify-content-center">
-  <app-bar *ngFor="let bar of state" [bar]="bar"></app-bar>
-</div>
-<div class="footer"></div>

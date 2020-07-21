@@ -1,16 +1,25 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AppComponent } from './app.component';
-import { BarComponent } from './bar/bar.component';
-import { BarContainerComponent } from './bar-container/bar-container.component';
+import { BarComponent } from './components/bar/bar.component';
 
 @NgModule({
-  declarations: [AppComponent, BarComponent, BarContainerComponent],
-  imports: [BrowserModule, NgbModule],
-  providers: [],
+  declarations: [AppComponent, BarComponent],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatToolbarModule,
+    ReactiveFormsModule,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
