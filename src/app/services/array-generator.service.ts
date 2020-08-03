@@ -9,34 +9,34 @@ export class ArrayGeneratorService {
 
   constructor() {}
 
-  generateArray(arrayTypeId: number) {
+  generateArray(arrayTypeId: number, numOfBars: number) {
     switch (arrayTypeId) {
       case ArrayTypeEnum.Random:
-        this.generateRandomArray();
+        this.generateRandomArray(numOfBars);
         break;
       case ArrayTypeEnum.PresortedAscending:
-        this.generatePresortedArrayAscending();
+        this.generatePresortedArrayAscending(numOfBars);
         break;
       case ArrayTypeEnum.PresortedDescending:
-        this.generatePresortedArrayDescending();
+        this.generatePresortedArrayDescending(numOfBars);
     }
   }
 
-  private generatePresortedArrayAscending() {
-    const generatedArray = this.generateRandomIntegerArray();
+  private generatePresortedArrayAscending(numOfBars: number) {
+    const generatedArray = this.generateRandomIntegerArray(numOfBars);
     generatedArray.sort(this.compare);
     this.generatedArraySubject.next(generatedArray);
   }
 
-  private generatePresortedArrayDescending() {
-    const generatedArray = this.generateRandomIntegerArray();
+  private generatePresortedArrayDescending(numOfBars: number) {
+    const generatedArray = this.generateRandomIntegerArray(numOfBars);
     generatedArray.sort(this.compare);
     generatedArray.reverse();
     this.generatedArraySubject.next(generatedArray);
   }
 
-  private generateRandomArray() {
-    const generatedArray = this.generateRandomIntegerArray();
+  private generateRandomArray(numOfBars: number) {
+    const generatedArray = this.generateRandomIntegerArray(numOfBars);
     this.generatedArraySubject.next(generatedArray);
   }
 
@@ -46,9 +46,9 @@ export class ArrayGeneratorService {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-  private generateRandomIntegerArray(): Bar[] {
+  private generateRandomIntegerArray(numOfBars: number): Bar[] {
     const generatedArray: Bar[] = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < numOfBars; i++) {
       const int = this.generateRandomInt(10, 100);
       const bar = { compare: false, final: false, value: int };
       generatedArray.push(bar);

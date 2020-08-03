@@ -8,10 +8,20 @@ a {
   text-decoration: none;
 }
 
+form {
+  border-bottom: 1px solid #fff;
+  padding-bottom: 5px;
+}
+
 .app-grid {
   display: grid;
   grid-template-rows: 1fr 8fr 1fr;
   height: 100%;
+}
+
+.command-button {
+  align-items: center;
+  display: flex;
 }
 
 .footer {
@@ -45,16 +55,20 @@ a {
   margin-left: 5px;
 }
 
-.toolbar {
+.speed {
   align-items: center;
-  border-bottom: 1px solid #fff;
   display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
 
-  * {
-    margin-left: 5px;
-    margin-right: 5px;
+  mat-slider {
+    margin: 0 10px;
+    width: 100%;
+  }
+}
+
+.toolbar {
+  button,
+  mat-form-field {
+    width: 100%;
   }
 
   mat-select {

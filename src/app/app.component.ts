@@ -1,9 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+
 import { Observable, Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
+
 import { ALGORITHMS, ARRAY_TYPES } from './data';
-import { Bar } from './models';
+import { Bar, SortButtonType } from './models';
 import { ArrayGeneratorService, SortFacade } from './services';
 
 @Component({
@@ -12,14 +14,17 @@ import { ArrayGeneratorService, SortFacade } from './services';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
+  SORT_BUTTON_TYPE = SortButtonType;
   algorithmsDataSource = ALGORITHMS;
   arrayTypeDataSource = ARRAY_TYPES;
-  isSortBtn = true;
+  numberOfBars: number;
+  sortButtonType = SortButtonType.Sort;
   state: Bar[] = [];
 
   form = this.fb.group({
     algorithmId: [null, Validators.required],
     arrayTypeId: [null, Validators.required],
+    speed: [5],
   });
 
   private arrayTypeSelected$: Observable<number> = this.form
@@ -36,12 +41,13 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.calculateBars(window.innerWidth);
     this.subscription
       .add(
         this.arrayTypeSelected$.subscribe({
           next: (id: number) => {
             this.onArrayTypeIdChange(id);
-            this.isSortBtn = true;
+            this.sortButtonType = SortButtonType.Sort;
           },
         })
       )
@@ -66,16 +72,28 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    const innerWidth: number = event.target.innerWidth;
+    this.calculateBars(innerWidth);
+  }
+
   onGenerate() {
     const arrayTypeId = this.form.value.arrayTypeId;
-    this.arrayGeneratorService.generateArray(arrayTypeId);
-    this.isSortBtn = true;
+    this.arrayGeneratorService.generateArray(arrayTypeId, this.numberOfBars);
+    this.sortButtonType = SortButtonType.Sort;
   }
 
   onSort() {
-    if (!this.isSortBtn) {
+    if (this.sortButtonType === SortButtonType.Stop) {
+      clearInterval(this.handler);
+      this.form.enable();
+      this.sortButtonType = SortButtonType.Reset;
+      return;
+    }
+    if (this.sortButtonType === SortButtonType.Reset) {
       this.state = this.originalState;
-      this.isSortBtn = true;
+      this.sortButtonType = SortButtonType.Sort;
       return;
     }
     this.form.disable();
@@ -87,20 +105,33 @@ export class AppComponent implements OnInit, OnDestroy {
     return item.value;
   }
 
+  private calculateBars(availableWidth: number) {
+    const clippedWidth = availableWidth - 30; // 15px padding per side
+    let bars = Math.floor(clippedWidth / (5 + 4)); // bar width + 2px margin per side
+    if (bars > 100) {
+      bars = 100;
+    }
+
+    this.numberOfBars = bars;
+    this.onGenerate();
+  }
+
   private onArrayTypeIdChange(arrayTypeId: number) {
-    this.arrayGeneratorService.generateArray(arrayTypeId);
+    this.arrayGeneratorService.generateArray(arrayTypeId, this.numberOfBars);
   }
 
   private onStatesUpdated(states: Bar[][]) {
+    const speed = this.form.get('speed').value;
+    this.sortButtonType = SortButtonType.Stop;
     let i = 0;
     this.handler = setInterval(() => {
       const nextState = states[i++ % states.length];
       this.state = nextState;
       if (i === states.length) {
         clearInterval(this.handler);
-        this.isSortBtn = false;
+        this.sortButtonType = SortButtonType.Reset;
         this.form.enable();
       }
-    }, 5);
+    }, speed);
   }
 }
