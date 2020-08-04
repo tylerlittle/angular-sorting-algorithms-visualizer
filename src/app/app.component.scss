@@ -13,10 +13,36 @@ form {
   padding-bottom: 5px;
 }
 
-.app-grid {
-  display: grid;
-  grid-template-rows: 1fr 8fr 1fr;
-  height: 100%;
+@media only screen and (max-height: 500px) {
+  .app-grid {
+    display: grid;
+    grid-template-rows: 1fr 3fr;
+    height: 100%;
+  }
+}
+
+@media only screen and (min-height: 501px) {
+  .app-grid {
+    display: grid;
+    grid-template-rows: 1fr 4fr 1fr;
+    height: 100%;
+  }
+}
+
+@media only screen and (min-width: 360px) and (max-width: 450px) {
+  .title {
+    h3 {
+      font-size: small;
+    }
+  }
+}
+
+@media only screen and (max-width: 359px) {
+  .title {
+    h3 {
+      font-size: smaller;
+    }
+  }
 }
 
 .command-button {
@@ -24,26 +50,30 @@ form {
   display: flex;
 }
 
+.deep-sky-blue {
+  color: deepskyblue;
+}
+
 .footer {
   border-top: 1px solid #fff;
-}
+  margin: 5px;
 
-.footer-grid {
-  column-gap: 32px;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(3, auto);
-  margin: 8px;
-  row-gap: 8px;
-}
+  * {
+    margin: 2px;
+  }
 
-.portfolio-link {
-  color: deepskyblue;
+  .social-container {
+    align-items: center;
+    display: flex;
+  }
 }
 
 .linked-in-logo {
   max-width: 32px;
+}
+
+.mat-slider-horizontal {
+  min-width: unset;
 }
 
 .social-link {
@@ -62,6 +92,15 @@ form {
   mat-slider {
     margin: 0 10px;
     width: 100%;
+  }
+}
+
+.title {
+  align-items: center;
+  display: flex;
+
+  h3 {
+    margin: 0;
   }
 }
 
