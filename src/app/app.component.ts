@@ -24,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
   form = this.fb.group({
     algorithmId: [null, Validators.required],
     arrayTypeId: [null, Validators.required],
-    speed: [5],
+    speed: [1],
   });
 
   private arrayTypeSelected$: Observable<number> = this.form
