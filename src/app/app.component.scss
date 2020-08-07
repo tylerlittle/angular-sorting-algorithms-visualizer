@@ -45,6 +45,12 @@ form {
   }
 }
 
+@media only screen and (max-height: 501px) and (orientation: landscape) {
+  .footer {
+    display: none;
+  }
+}
+
 .command-button {
   align-items: center;
   display: flex;

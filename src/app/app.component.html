@@ -78,7 +78,7 @@
   <div class="visualizer-main">
     <app-bar *ngFor="let bar of state; index as i; trackBy: trackByFn" [bar]="bar"></app-bar>
   </div>
-  <div class="footer" *ngIf="isFooterVisible$ | async">
+  <div class="footer">
     <p>
       This sorting visualizer was built with Angular and Angular Material.
     </p>

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 
 import { ALGORITHMS, ARRAY_TYPES } from './data';
@@ -32,10 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
     .valueChanges.pipe(distinctUntilChanged());
   private handler = null;
   private originalState: Bar[] = [];
-  private isFooterVisibleSubject = new BehaviorSubject<boolean>(true);
   private subscription = new Subscription();
-
-  isFooterVisible$ = this.isFooterVisibleSubject.asObservable();
 
   constructor(
     private arrayGeneratorService: ArrayGeneratorService,
@@ -45,7 +42,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.calculateBars(window.innerWidth);
-    this.setFooterVisibility(window.innerHeight);
     this.subscription
       .add(
         this.arrayTypeSelected$.subscribe({
@@ -80,7 +76,6 @@ export class AppComponent implements OnInit, OnDestroy {
   onResize(event: any) {
     const innerHeight: number = event.target.innerHeight;
     const innerWidth: number = event.target.innerWidth;
-    this.setFooterVisibility(innerHeight);
     this.calculateBars(innerWidth);
   }
 
@@ -139,11 +134,5 @@ export class AppComponent implements OnInit, OnDestroy {
         this.form.enable();
       }
     }, speed);
-  }
-
-  private setFooterVisibility(height: number) {
-    height <= 500
-      ? this.isFooterVisibleSubject.next(false)
-      : this.isFooterVisibleSubject.next(true);
   }
 }
