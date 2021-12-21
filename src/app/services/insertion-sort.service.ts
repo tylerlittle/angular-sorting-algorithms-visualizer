@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Bar } from '../models/bar.model';
+import { ISortService } from './sort-service.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class InsertionSortService {
+export class InsertionSortService implements ISortService {
   constructor() {}
 
   sort(originalArray: Bar[]): Bar[][] {

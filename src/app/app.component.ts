@@ -74,7 +74,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
-    const innerHeight: number = event.target.innerHeight;
     const innerWidth: number = event.target.innerWidth;
     this.calculateBars(innerWidth);
   }

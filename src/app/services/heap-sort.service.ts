@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Bar } from '../models/bar.model';
+import { ISortService } from './sort-service.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HeapSortService {
+export class HeapSortService implements ISortService {
   private arrayLength = 0;
   private arrayStates: Bar[][] = [];
 

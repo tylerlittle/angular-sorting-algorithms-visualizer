@@ -37,7 +37,6 @@ export class SortFacade {
         break;
       case SortingAlgorithmEnum.SelectionSort:
         this.states = this.selectionSortService.sort(state);
-        break;
     }
     this.arrayStatesSubject.next(this.states);
   }
